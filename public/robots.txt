@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://devils-lake-bar-grill.vercel.app/sitemap.xml

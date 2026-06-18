@@ -38,6 +38,27 @@ function AnimateIn({ children, delay = 0, from = 'bottom', className = '', style
   )
 }
 
+// ─── NOTION DATA FETCH ───────────────────────────────────────────────────────
+
+function useNotionData() {
+  const [liveMusic, setLiveMusic] = useState(LIVE_MUSIC_FALLBACK)
+  const [menuItems, setMenuItems] = useState({})
+
+  useEffect(() => {
+    fetch('/api/dl-events')
+      .then(r => r.ok ? r.json() : null)
+      .then(data => { if (Array.isArray(data) && data.length) setLiveMusic(data) })
+      .catch(() => {})
+
+    fetch('/api/dl-menu')
+      .then(r => r.ok ? r.json() : null)
+      .then(data => { if (data && typeof data === 'object') setMenuItems(data) })
+      .catch(() => {})
+  }, [])
+
+  return { liveMusic, menuItems }
+}
+
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
 const WEEKLY_SPECIALS = [
@@ -263,7 +284,7 @@ const MENUS = {
   },
 }
 
-const LIVE_MUSIC = [
+const LIVE_MUSIC_FALLBACK = [
   { date: '2026-05-02', artist: 'Kevin Wolff',                          time: '6-9pm' },
   { date: '2026-05-09', artist: 'Ryan Groth',                           time: '6-9pm' },
   { date: '2026-05-29', artist: 'Jaded Soul',                           time: '8-11pm' },
@@ -486,9 +507,15 @@ function MenuSection({ section }) {
 
 const TAB_ORDER = ['breakfast', 'tacos', 'steaks', 'cocktails']
 
-function Menu() {
+function Menu({ menuItems = {} }) {
   const [active, setActive] = useState('breakfast')
-  const menu = MENUS[active]
+  const base = MENUS[active]
+  const categoryData = menuItems[active] || {}
+  const sections = base.sections.map(s => ({
+    ...s,
+    items: categoryData[s.title] || s.items,
+  }))
+  const menu = { ...base, sections }
 
   return (
     <section id="menu" className="py-20 bg-lake-cream">
@@ -574,12 +601,12 @@ function Menu() {
 
 // ─── LIVE MUSIC ───────────────────────────────────────────────────────────────
 
-function LiveMusic() {
+function LiveMusic({ liveMusic = LIVE_MUSIC_FALLBACK }) {
   const today = new Date()
   today.setHours(0, 0, 0, 0)
 
-  const upcoming = LIVE_MUSIC.filter(e => new Date(e.date + 'T12:00:00') >= today)
-  const past     = LIVE_MUSIC.filter(e => new Date(e.date + 'T12:00:00') <  today)
+  const upcoming = liveMusic.filter(e => new Date(e.date + 'T12:00:00') >= today)
+  const past     = liveMusic.filter(e => new Date(e.date + 'T12:00:00') <  today)
 
   return (
     <section id="music"
@@ -805,7 +832,8 @@ function FindUs() {
               className="relative block rounded-2xl overflow-hidden group h-52">
               <img
                 src="/Devils-lake-bar-grill.jpg"
-                alt="Devils Lake Bar and Grill aerial view"
+                alt="Aerial view of Devils Lake Bar and Grill on US-223, Addison Michigan, with Devils Lake in the background"
+                loading="lazy"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-lake-dark/50 group-hover:bg-lake-dark/40 transition-colors
@@ -873,13 +901,14 @@ function Footer() {
 // ─── APP ──────────────────────────────────────────────────────────────────────
 
 export default function App() {
+  const { liveMusic, menuItems } = useNotionData()
   return (
     <div style={{ minHeight: '100vh' }}>
       <Nav />
       <Hero />
       <WeeklySpecials />
-      <Menu />
-      <LiveMusic />
+      <Menu menuItems={menuItems} />
+      <LiveMusic liveMusic={liveMusic} />
       <ReviewTicker />
       <FindUs />
       <Footer />
