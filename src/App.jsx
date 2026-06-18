@@ -385,7 +385,7 @@ function Hero() {
           Addison, Michigan · Devils Lake
         </p>
         <h1 className="text-lake-cream font-serif text-4xl md:text-6xl font-bold leading-tight mb-3 drop-shadow-lg">
-          Living your <span className="text-lake-gold">best life</span>
+          Living Your <span className="text-lake-gold">Best Life</span>
         </h1>
         <p className="text-lake-cream/70 text-base md:text-lg max-w-sm mb-10">
           Great food, cold drinks, live music, and the best view in Lenawee County.
