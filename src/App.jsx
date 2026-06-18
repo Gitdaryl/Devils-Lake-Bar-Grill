@@ -3,62 +3,227 @@ import './index.css'
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
-const BREAKFAST_MENU = {
-  note: 'Served Weekends 9am - 12pm',
-  sections: [
-    {
-      title: 'Classic Breakfast',
-      items: [
-        { name: 'Locals Favorite',    price: '$12.49', desc: '2 eggs any style, choice of bacon or sausage, hash browns, & toast' },
-        { name: 'Country Breakfast',  price: '$13.49', desc: 'Biscuits smothered in sausage gravy with two eggs and hashbrowns' },
-        { name: 'Steak & Eggs',       price: '$19.99', desc: '8 oz grilled sirloin, two eggs, hashbrowns, and toast' },
-        { name: 'Breakfast Bowl',     price: '$11.99', desc: 'Hashbrowns loaded with scrambled eggs, sausage gravy, cheddar cheese, bacon bits, and green onions' },
-        { name: 'Pancake Combo',      price: '$12.49', desc: 'Three pancakes, two eggs, and a choice of bacon or sausage' },
-        { name: 'French Toast Platter', price: '$12.99', desc: 'Texas toast, French toast, two eggs, and a choice of bacon or sausage' },
-      ],
-    },
-    {
-      title: 'Omelets',
-      note: 'Served with hashbrowns and toast',
-      items: [
-        { name: 'Meat Lovers Omelet', price: '$12.99', desc: 'Ham, bacon, sausage, and cheese' },
-        { name: 'Farmers Omelet',     price: '$12.99', desc: 'Sausage, bacon, peppers, tomato, and cheese' },
-        { name: 'Country Omelet',     price: '$13.99', desc: 'Sausage, bacon, peppers, tomato, and cheese, smothered in sausage gravy' },
-      ],
-    },
-    {
-      title: "Devil's Pick",
-      items: [
-        { name: 'Hangover Cure',         price: '$10.99', desc: 'Breakfast burrito loaded with eggs, hashbrowns, gravy, cheese, and bacon' },
-        { name: 'Biscuits & Gravy',      price: '$9.99',  desc: '' },
-        { name: 'Breakfast Sandwich',    price: '$6.49',  desc: 'Egg, cheese, and choice of bacon or sausage on an English muffin' },
-        { name: 'Loaded Avocado Toast',  price: '$12.99', desc: 'Avocado, bacon, and eggs, served on sourdough bread' },
-      ],
-    },
-    {
-      title: 'Sides',
-      columns: true,
-      items: [
-        { name: 'Hashbrowns', price: '$3.49', desc: '' },
-        { name: 'Bacon',      price: '$3.49', desc: '' },
-        { name: 'Sausage',    price: '$3.49', desc: '' },
-        { name: 'Toast',      price: '$1.99', desc: '' },
-        { name: 'Pancake',    price: '$3.49', desc: '' },
-        { name: 'Egg',        price: '$1.99', desc: '' },
-      ],
-    },
-    {
-      title: 'Drinks',
-      columns: true,
-      items: [
-        { name: 'Coffee',       price: '$2.49', desc: '' },
-        { name: 'Orange Juice', price: '$1.99', desc: '' },
-        { name: 'Milk',         price: '$1.99', desc: '' },
-        { name: 'Iced Tea',     price: '$2.99', desc: '' },
-        { name: 'Fountain Pop', price: '$2.95', desc: '' },
-      ],
-    },
-  ],
+const WEEKLY_SPECIALS = [
+  { day: 'Mon', label: 'Trivia Night',      icon: '🧠', desc: 'Test your knowledge with the crew' },
+  { day: 'Tue', label: 'Taco Tuesday',      icon: '🌮', desc: '3pm - 10pm · Happy Hour 3-5pm' },
+  { day: 'Wed', label: '$1 Wings',          icon: '🍗', desc: 'Best deal on the lake, all night long' },
+  { day: 'Thu', label: 'Thirsty Thursday',  icon: '🍔', desc: '$1 off burger baskets · Margaritas $4.50' },
+  { day: 'Fri', label: 'Steak Night',       icon: '🥩', desc: '12oz NY Strip & 16oz Ribeye, Friday only' },
+  { day: 'Sat', label: 'Karaoke',           icon: '🎤', desc: 'Sing your heart out - come early for a spot' },
+]
+
+const MENUS = {
+  breakfast: {
+    label: 'Breakfast',
+    badge: 'Weekends 9am - 12pm',
+    badgeColor: 'bg-amber-500',
+    icon: '☀️',
+    sections: [
+      {
+        title: 'Classic Breakfast',
+        items: [
+          { name: 'Locals Favorite',      price: '$12.49', desc: '2 eggs any style, choice of bacon or sausage, hash browns & toast' },
+          { name: 'Country Breakfast',    price: '$13.49', desc: 'Biscuits smothered in sausage gravy with two eggs and hashbrowns' },
+          { name: 'Steak & Eggs',         price: '$19.99', desc: '8 oz grilled sirloin, two eggs, hashbrowns, and toast' },
+          { name: 'Breakfast Bowl',       price: '$11.99', desc: 'Hashbrowns loaded with scrambled eggs, sausage gravy, cheddar cheese, bacon bits, and green onions' },
+          { name: 'Pancake Combo',        price: '$12.49', desc: 'Three pancakes, two eggs, and a choice of bacon or sausage' },
+          { name: 'French Toast Platter', price: '$12.99', desc: 'Texas toast, French toast, two eggs, and a choice of bacon or sausage' },
+        ],
+      },
+      {
+        title: 'Omelets',
+        note: 'Served with hashbrowns and toast',
+        items: [
+          { name: 'Meat Lovers Omelet', price: '$12.99', desc: 'Ham, bacon, sausage, and cheese' },
+          { name: 'Farmers Omelet',     price: '$12.99', desc: 'Sausage, bacon, peppers, tomato, and cheese' },
+          { name: 'Country Omelet',     price: '$13.99', desc: 'Sausage, bacon, peppers, tomato, and cheese, smothered in sausage gravy' },
+        ],
+      },
+      {
+        title: "Devil's Pick",
+        items: [
+          { name: 'Hangover Cure',        price: '$10.99', desc: 'Breakfast burrito loaded with eggs, hashbrowns, gravy, cheese, and bacon' },
+          { name: 'Biscuits & Gravy',     price: '$9.99',  desc: '' },
+          { name: 'Breakfast Sandwich',   price: '$6.49',  desc: 'Egg, cheese, and choice of bacon or sausage on an English muffin' },
+          { name: 'Loaded Avocado Toast', price: '$12.99', desc: 'Avocado, bacon, and eggs, served on sourdough bread' },
+        ],
+      },
+      {
+        title: 'Sides',
+        columns: true,
+        items: [
+          { name: 'Hashbrowns', price: '$3.49' },
+          { name: 'Bacon',      price: '$3.49' },
+          { name: 'Sausage',    price: '$3.49' },
+          { name: 'Toast',      price: '$1.99' },
+          { name: 'Pancake',    price: '$3.49' },
+          { name: 'Egg',        price: '$1.99' },
+        ],
+      },
+      {
+        title: 'Drinks',
+        columns: true,
+        items: [
+          { name: 'Coffee',       price: '$2.49' },
+          { name: 'Orange Juice', price: '$1.99' },
+          { name: 'Milk',         price: '$1.99' },
+          { name: 'Iced Tea',     price: '$2.99' },
+          { name: 'Fountain Pop', price: '$2.95' },
+        ],
+      },
+    ],
+    footer: 'Ask your server about daily drink & food specials',
+  },
+
+  tacos: {
+    label: 'Taco Tuesday',
+    badge: 'Every Tuesday 3pm - 10pm',
+    badgeColor: 'bg-orange-500',
+    icon: '🌮',
+    special: 'House Devil\'s Lake Gold Margarita $4 · 16 oz Frozen Margarita $6 (add Raspberry, Strawberry, or Mango +$1) · Happy Hour 3-5pm',
+    sections: [
+      {
+        title: 'Appetizers',
+        items: [
+          { name: 'Queso Dip',      price: '$6.00',  desc: 'Served with fresh house made chips' },
+          { name: 'Salsa',          price: '$4.00',  desc: 'Mild or Hot, served with fresh house made chips' },
+          { name: 'Guacamole',      price: '$3.50+', desc: '4 oz $3.50 · 8 oz $5.50, served with fresh house made chips' },
+          { name: 'Loaded Nachos',  price: '$14.00', desc: 'House made chips, refried or black beans, shredded cheese, nacho cheese, lettuce, tomato, salsa, sour cream. Choice of beef, chicken, or smoked pulled pork (pork drizzled w/ BBQ sauce)' },
+          { name: 'Quesadilla',     price: '$8+',    desc: 'Just cheese $8 · Meat & cheese $10 · Santa Fe Chicken Quesadilla (with Santa Fe salsa) $12' },
+        ],
+      },
+      {
+        title: 'Tacos',
+        note: 'Corn or flour shell',
+        items: [
+          { name: 'Beef Taco',                     price: 'From $2.00', desc: 'Seasoned beef, lettuce, tomato, shredded cheese · 1 corn $2 / 3 corn $5.50 / 1 flour $2.25 / 3 flour $6.25' },
+          { name: 'Chicken or Smoked Pulled Pork', price: 'From $2.50', desc: 'Corn or flour shell, lettuce, tomato, shredded cheese · 1 corn $2.50 / 3 corn $7 / 1 flour $2.75 / 3 flour $7.75' },
+          { name: 'Chicken Bacon Ranch',            price: '$3.75 each', desc: 'Flour tortilla, tender chicken, thick cut bacon, shredded cheese, house made creamy ranch' },
+          { name: 'Double Decker Beef',             price: 'From $4.00', desc: 'Flour shell spread with refried beans, layered with a corn shell, seasoned ground beef, lettuce, tomato, shredded cheese · 1 for $4 / 3 for $10' },
+        ],
+      },
+      {
+        title: 'Wraps & Plates',
+        items: [
+          { name: 'Wet Burrito',              price: 'From $10.00', desc: 'Large flour tortilla, rice, beans, shredded cheese, onion, smothered in enchilada sauce · Beef $10 / Chicken or Pork $12' },
+          { name: 'Chicken or Steak Fajita',  price: 'From $10.00', desc: '2 fajitas stuffed with peppers and onions on flour shells, shredded cheese, served with rice and beans · Chicken $10 / Steak $13' },
+          { name: 'Tostada Crunch Wrap',      price: '$8.00',       desc: 'Flour shell spread with refried beans, wrapped around a hard corn shell, seasoned beef, lettuce, shredded cheese' },
+        ],
+      },
+      {
+        title: 'Taco Salads',
+        items: [
+          { name: 'Seasoned Ground Beef Taco Salad', price: '$11.00', desc: 'Fresh house made tortilla chips, lettuce, seasoned ground beef, shredded cheese, Santa Fe salsa, sour cream, guacamole' },
+          { name: 'Chicken Fajita Taco Salad',       price: '$13.00', desc: 'Fresh house made tortilla chips, lettuce, grilled chicken, grilled peppers & onions, tomatoes, shredded cheese, salsa, sour cream' },
+        ],
+      },
+      {
+        title: 'Sides',
+        columns: true,
+        items: [
+          { name: 'Mexican Rice',  price: '$3.00' },
+          { name: 'Refried Beans', price: '$3.00' },
+          { name: 'Tea or Soda',   price: '$2.99' },
+        ],
+      },
+      {
+        title: 'Dessert',
+        columns: true,
+        items: [
+          { name: 'Churros with Chocolate Sauce', price: '$5.99' },
+        ],
+      },
+    ],
+    footer: 'Ask your server about mocktails and drink specials. Bottled beer, draft beer, seltzers, hard cider, wine & cocktails available.',
+  },
+
+  steaks: {
+    label: 'Steak Night',
+    badge: 'Every Friday',
+    badgeColor: 'bg-red-700',
+    icon: '🥩',
+    sections: [
+      {
+        title: 'Steaks',
+        note: 'Choose any 2 sides with your steak',
+        items: [
+          { name: '16 oz. Ribeye', price: '$32', desc: 'Choose 2 sides' },
+          { name: '12 oz. NY Strip', price: '$22', desc: 'Choose 2 sides' },
+        ],
+      },
+      {
+        title: 'Sides',
+        columns: true,
+        items: [
+          { name: 'Broccoli',          price: '' },
+          { name: 'Side Salad',        price: '' },
+          { name: 'Brussel Sprouts',   price: '' },
+          { name: 'Fries',             price: '' },
+          { name: 'Baked Potato',      price: '' },
+          { name: 'Onion Rings',       price: '' },
+          { name: 'Waffle Fries',      price: '' },
+          { name: 'Sweet Potato Fries', price: '' },
+        ],
+      },
+      {
+        title: 'Starters & Shareables',
+        items: [
+          { name: 'Cowboy Caviar',           price: '$7',  desc: 'Served with chips' },
+          { name: 'Santa Fe Chicken Quesadilla', price: '$11', desc: '' },
+          { name: 'Homemade Crust Pizza',    price: '$24', desc: 'See your server for flatbread options' },
+        ],
+      },
+      {
+        title: 'Dessert',
+        columns: true,
+        items: [
+          { name: 'NY Style Cheesecake', price: '' },
+          { name: 'Brownie Sunday',      price: '' },
+          { name: 'Floats',              price: '' },
+        ],
+      },
+    ],
+    footer: 'Busch Apple, Red/White/Blue Shot, Frozen Patriotic Drink & more. Ask your server for tonight\'s drink specials.',
+  },
+
+  cocktails: {
+    label: 'Cocktails',
+    badge: 'Spring Drink Menu',
+    badgeColor: 'bg-pink-600',
+    icon: '🍹',
+    sections: [
+      {
+        title: 'Signature Cocktails',
+        items: [
+          { name: 'Whiskey Lemon',        price: '', desc: 'Jack Honey, fresh lemon, honey, club soda' },
+          { name: 'Peach Crush',          price: '', desc: 'Vodka, peach schnapps, Sprite, OJ' },
+          { name: 'Pink Martini',         price: '', desc: 'Vodka, strawberry puree, lemon' },
+          { name: 'Red Stag Half & Half', price: '', desc: 'Red Stag, iced tea, lemonade' },
+          { name: 'Razzberry Ice Tea',    price: '', desc: 'Jameson, Razzmatazz raspberry liqueur, iced tea' },
+        ],
+      },
+      {
+        title: 'Flights',
+        items: [
+          { name: 'Margarita Flight',       price: '', desc: 'Frozen or on the rocks - Strawberry, Mango, Raspberry, Lime' },
+          { name: 'Flavored Mojito Flight', price: '', desc: 'Strawberry, Mango, Raspberry, Original' },
+        ],
+      },
+      {
+        title: 'Bar Staples',
+        columns: true,
+        items: [
+          { name: 'Draft Beer',    price: '' },
+          { name: 'Bottled Beer',  price: '' },
+          { name: 'Seltzers',      price: '' },
+          { name: 'Hard Cider',    price: '' },
+          { name: 'Wine',          price: '' },
+          { name: 'Jello Shots',   price: '$2' },
+        ],
+      },
+    ],
+    footer: 'Menu rotates seasonally. Ask your server about tonight\'s specials and featured shots.',
+  },
 }
 
 const LIVE_MUSIC = [
@@ -78,28 +243,106 @@ const LIVE_MUSIC = [
   { date: '2026-09-05', artist: 'Joey D. & the Small Band Superstars',  time: 'TBD' },
 ]
 
-const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
-const DAYS   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+const DAYS_SHORT  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+const MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 
-function formatDate(dateStr) {
-  const d = new Date(dateStr + 'T12:00:00')
-  return `${DAYS[d.getDay()]} ${MONTHS[d.getMonth()]} ${d.getDate()}`
+function fmtDate(str) {
+  const d = new Date(str + 'T12:00:00')
+  return `${DAYS_SHORT[d.getDay()]} ${MONTHS_SHORT[d.getMonth()]} ${d.getDate()}`
 }
 
-// ─── COMPONENTS ──────────────────────────────────────────────────────────────
+// ─── LOGO ────────────────────────────────────────────────────────────────────
+
+function BrandLogo({ size = 80 }) {
+  const r = size / 2
+  return (
+    <svg viewBox="0 0 200 200" width={size} height={size} aria-label="Devils Lake Bar and Grill">
+      <defs>
+        <linearGradient id="sunGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#d42020" />
+          <stop offset="50%" stopColor="#e87822" />
+          <stop offset="100%" stopColor="#f5b833" />
+        </linearGradient>
+        <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#faf4ea" />
+          <stop offset="100%" stopColor="#e8e0d0" />
+        </linearGradient>
+        <clipPath id="circle"><circle cx="100" cy="100" r="93" /></clipPath>
+      </defs>
+
+      {/* Outer ring */}
+      <circle cx="100" cy="100" r="98" fill="#1a2035" />
+      <circle cx="100" cy="100" r="93" fill="url(#skyGrad)" />
+
+      {/* Sun rays */}
+      {[0,22,44,66,-22,-44,-66,-88,88].map((angle, i) => (
+        <line key={i}
+          x1="100" y1="100"
+          x2={100 + 80 * Math.sin((angle * Math.PI) / 180)}
+          y2={100 - 80 * Math.cos((angle * Math.PI) / 180)}
+          stroke="#e87822" strokeWidth="2.5" strokeDasharray="4 4" opacity="0.7"
+          clipPath="url(#circle)"
+        />
+      ))}
+
+      {/* Lake horizon arc */}
+      <path d="M 15 108 Q 100 68 185 108" fill="none" stroke="#2a7a8c" strokeWidth="7" strokeLinecap="round" />
+
+      {/* Wave divider */}
+      <path d="M 15 122 Q 40 112 65 122 T 115 122 T 165 122 T 185 122"
+        fill="none" stroke="#1a2035" strokeWidth="3" opacity="0.5" />
+
+      {/* Water bottom fill */}
+      <path d="M 15 122 Q 40 112 65 122 T 115 122 T 165 122 T 185 122 L 185 190 L 15 190 Z"
+        fill="#d4eef5" opacity="0.6" clipPath="url(#circle)" />
+
+      {/* Water lines */}
+      {[132, 143, 154, 165].map((y, i) => (
+        <line key={i} x1={25 + i * 5} y1={y} x2={175 - i * 5} y2={y}
+          stroke="#2a7a8c" strokeWidth="1.5" opacity={0.4 - i * 0.08} clipPath="url(#circle)" />
+      ))}
+
+      {/* DEVILS LAKE text */}
+      <text x="100" y="120" textAnchor="middle"
+        fontFamily="Georgia, serif" fontSize="26" fontWeight="900"
+        letterSpacing="1" fill="url(#sunGrad)">
+        DEVILS LAKE
+      </text>
+
+      {/* Bar and Grill text */}
+      <text x="100" y="148" textAnchor="middle"
+        fontFamily="Georgia, serif" fontSize="13" fontWeight="700" fill="#1a2035">
+        Bar and Grill
+      </text>
+
+      {/* Tagline arc */}
+      <path id="tagArc" d="M 30 85 A 75 75 0 0 1 170 85" fill="none" />
+      <text fontSize="9" fontFamily="Georgia, serif" fontStyle="italic" fill="#444" opacity="0.8">
+        <textPath href="#tagArc" startOffset="50%" textAnchor="middle">
+          Living your best life
+        </textPath>
+      </text>
+    </svg>
+  )
+}
+
+// ─── NAV ─────────────────────────────────────────────────────────────────────
 
 function Nav() {
   return (
     <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50 }}
-      className="bg-lake-dark/95 backdrop-blur border-b border-lake-navy">
+      className="bg-lake-dark/96 backdrop-blur border-b border-lake-navy">
       <div className="max-w-5xl mx-auto px-4 flex items-center justify-between h-14">
-        <span className="text-lake-gold font-serif font-bold text-lg tracking-wide">
-          Devils Lake Bar &amp; Grill
-        </span>
-        <div className="flex gap-6 text-sm">
-          {[['#menu','Menu'],['#music','Live Music'],['#find-us','Find Us']].map(([href, label]) => (
+        <div className="flex items-center gap-3">
+          <BrandLogo size={36} />
+          <span className="text-lake-gold font-serif font-bold text-base tracking-wide hidden sm:block">
+            Devils Lake Bar &amp; Grill
+          </span>
+        </div>
+        <div className="flex gap-5 text-sm">
+          {[['#specials','Specials'],['#menu','Menu'],['#music','Live Music'],['#find-us','Find Us']].map(([href, label]) => (
             <a key={href} href={href}
-              className="text-lake-cream/80 hover:text-lake-gold transition-colors font-medium">
+              className="text-lake-cream/70 hover:text-lake-gold transition-colors font-medium">
               {label}
             </a>
           ))}
@@ -109,56 +352,106 @@ function Nav() {
   )
 }
 
+// ─── HERO ─────────────────────────────────────────────────────────────────────
+
 function Hero() {
   return (
     <section className="min-h-screen flex flex-col items-center justify-center text-center px-4 pt-14"
-      style={{ background: 'linear-gradient(160deg, #0d1b2a 0%, #1a2d45 60%, #0f2238 100%)' }}>
-      {/* Water ripple rings */}
-      <div className="relative mb-8">
-        {[0,1,2].map(i => (
-          <div key={i} className="absolute rounded-full border border-lake-chalk/10"
-            style={{
-              width: 120 + i * 80, height: 120 + i * 80,
-              top: '50%', left: '50%',
-              transform: 'translate(-50%, -50%)',
-            }} />
-        ))}
-        <div className="relative z-10 w-24 h-24 rounded-full bg-lake-blue/20 border-2 border-lake-chalk/30
-          flex items-center justify-center">
-          <span className="text-4xl">🍺</span>
-        </div>
+      style={{ background: 'linear-gradient(160deg, #0d1b2a 0%, #1a2d45 55%, #0a1e32 100%)' }}>
+
+      <div className="mb-8">
+        <BrandLogo size={160} />
       </div>
 
-      <p className="text-lake-chalk text-sm tracking-[0.3em] uppercase mb-2">Devils Lake, Michigan</p>
-      <h1 className="text-lake-cream font-serif text-5xl md:text-7xl font-bold leading-tight mb-4">
-        Devils Lake<br />
-        <span className="text-lake-gold">Bar &amp; Grill</span>
+      <p className="text-lake-chalk text-xs tracking-[0.4em] uppercase mb-3 opacity-70">
+        Addison, Michigan · Devils Lake
+      </p>
+      <h1 className="text-lake-cream font-serif text-4xl md:text-6xl font-bold leading-tight mb-3">
+        Living your <span className="text-lake-gold">best life</span>
       </h1>
-      <p className="text-lake-cream/70 text-lg md:text-xl max-w-md mb-10">
-        Your lakeside spot for good food, cold drinks, and live music all summer long.
+      <p className="text-lake-cream/60 text-base md:text-lg max-w-sm mb-10">
+        Great food, cold drinks, live music, and the best view in Lenawee County.
       </p>
 
       <div className="flex flex-wrap gap-3 justify-center mb-12">
         <a href="#menu"
-          className="px-6 py-3 bg-lake-blue text-white rounded-lg font-semibold hover:bg-lake-blue/80 transition-colors">
+          className="px-6 py-3 bg-lake-blue text-white rounded-lg font-semibold
+            hover:bg-blue-600 transition-colors">
           See the Menu
         </a>
         <a href="#music"
-          className="px-6 py-3 border border-lake-chalk/40 text-lake-chalk rounded-lg font-semibold hover:bg-lake-navy transition-colors">
+          className="px-6 py-3 border border-lake-chalk/30 text-lake-chalk rounded-lg font-semibold
+            hover:bg-lake-navy transition-colors">
           Live Music Lineup
         </a>
       </div>
 
-      {/* Quick info strip */}
-      <div className="flex flex-wrap gap-6 justify-center text-sm text-lake-cream/60">
-        <span>📍 Devils Lake, MI</span>
-        <span>☕ Weekend Breakfast 9am - 12pm</span>
-        <span>🎵 Live Music All Summer</span>
-        <span>📞 <a href="tel:5174035953" className="hover:text-lake-gold transition-colors">517-403-5953</a></span>
+      <div className="flex flex-wrap gap-5 justify-center text-xs text-lake-cream/50">
+        <span>📍 6365 US-223, Addison, MI</span>
+        <span>📞 <a href="tel:5172525568" className="hover:text-lake-gold transition-colors">(517) 252-5568</a></span>
+        <span>☀️ Weekend Breakfast 9am - 12pm</span>
+        <span>21+ in bar &amp; patio after 11pm</span>
       </div>
 
-      <div className="mt-16 animate-bounce text-lake-chalk/40 text-2xl">↓</div>
+      <div className="mt-14 text-lake-chalk/30 text-xl animate-bounce">↓</div>
     </section>
+  )
+}
+
+// ─── WEEKLY SPECIALS ──────────────────────────────────────────────────────────
+
+function WeeklySpecials() {
+  const today = new Date().getDay() // 0=Sun
+  const dayMap = { Mon:1, Tue:2, Wed:3, Thu:4, Fri:5, Sat:6 }
+
+  return (
+    <section id="specials"
+      style={{ background: '#111820' }}
+      className="py-16">
+      <div className="max-w-5xl mx-auto px-4">
+        <div className="text-center mb-10">
+          <p className="text-lake-chalk text-xs tracking-[0.3em] uppercase font-semibold mb-2 opacity-60">Every Week</p>
+          <h2 className="font-serif text-3xl text-lake-cream font-bold">Weekly Specials</h2>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+          {WEEKLY_SPECIALS.map(({ day, label, icon, desc }) => {
+            const isToday = dayMap[day] === today
+            return (
+              <div key={day}
+                className={`rounded-xl p-4 text-center border transition-colors
+                  ${isToday
+                    ? 'bg-lake-blue border-lake-chalk/30 ring-1 ring-lake-gold'
+                    : 'bg-lake-navy/40 border-lake-chalk/10 hover:bg-lake-navy/70'}`}>
+                <div className="text-2xl mb-2">{icon}</div>
+                <p className={`text-xs font-bold tracking-widest uppercase mb-1
+                  ${isToday ? 'text-lake-gold' : 'text-lake-chalk/50'}`}>
+                  {day}{isToday && ' · Today'}
+                </p>
+                <p className="text-lake-cream font-bold text-sm mb-1">{label}</p>
+                <p className="text-lake-chalk/50 text-xs leading-snug">{desc}</p>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─── MENU ─────────────────────────────────────────────────────────────────────
+
+function MenuItem({ item }) {
+  return (
+    <div className="flex justify-between gap-2">
+      <div className="flex-1 min-w-0">
+        <span className="font-bold text-lake-dark text-sm">{item.name}</span>
+        {item.desc && <p className="text-lake-dark/55 text-xs mt-0.5 leading-snug">{item.desc}</p>}
+      </div>
+      {item.price && (
+        <span className="text-lake-blue font-bold text-sm shrink-0">{item.price}</span>
+      )}
+    </div>
   )
 }
 
@@ -166,15 +459,13 @@ function MenuSection({ section }) {
   if (section.columns) {
     return (
       <div>
-        <h3 className="text-lake-blue font-bold text-sm tracking-[0.2em] uppercase mb-3
-          pb-1 border-b border-lake-navy/30">
-          {section.title}
-        </h3>
-        <div className="grid grid-cols-2 gap-x-6 gap-y-2">
+        <h3 className="text-lake-blue font-bold text-xs tracking-[0.2em] uppercase mb-2
+          pb-1 border-b border-lake-navy/20">{section.title}</h3>
+        <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
           {section.items.map(item => (
             <div key={item.name} className="flex justify-between items-center">
               <span className="text-lake-dark font-medium text-sm">{item.name}</span>
-              <span className="text-lake-blue font-bold text-sm ml-2 shrink-0">{item.price}</span>
+              {item.price && <span className="text-lake-blue font-bold text-xs ml-1 shrink-0">{item.price}</span>}
             </div>
           ))}
         </div>
@@ -184,75 +475,102 @@ function MenuSection({ section }) {
 
   return (
     <div>
-      <h3 className="text-lake-blue font-bold text-sm tracking-[0.2em] uppercase mb-1
-        pb-1 border-b border-lake-navy/30">
-        {section.title}
-      </h3>
-      {section.note && (
-        <p className="text-lake-dark/50 text-xs italic mb-3">{section.note}</p>
-      )}
+      <h3 className="text-lake-blue font-bold text-xs tracking-[0.2em] uppercase mb-1
+        pb-1 border-b border-lake-navy/20">{section.title}</h3>
+      {section.note && <p className="text-lake-dark/45 text-xs italic mb-2">{section.note}</p>}
       <div className="space-y-3">
-        {section.items.map(item => (
-          <div key={item.name} className="flex justify-between gap-2">
-            <div className="flex-1 min-w-0">
-              <span className="font-bold text-lake-dark text-sm">{item.name}</span>
-              {item.desc && <p className="text-lake-dark/60 text-xs mt-0.5 leading-snug">{item.desc}</p>}
-            </div>
-            <span className="text-lake-blue font-bold text-sm shrink-0">{item.price}</span>
-          </div>
-        ))}
+        {section.items.map(item => <MenuItem key={item.name} item={item} />)}
       </div>
     </div>
   )
 }
 
+const TAB_ORDER = ['breakfast', 'tacos', 'steaks', 'cocktails']
+
 function Menu() {
+  const [active, setActive] = useState('breakfast')
+  const menu = MENUS[active]
+
   return (
     <section id="menu" className="py-20 bg-lake-cream">
       <div className="max-w-4xl mx-auto px-4">
-        <div className="text-center mb-12">
-          <p className="text-lake-blue text-sm tracking-[0.3em] uppercase font-semibold mb-2">Food</p>
-          <h2 className="font-serif text-4xl text-lake-dark font-bold mb-3">The Menu</h2>
-          <div className="inline-flex items-center gap-2 bg-lake-blue text-white text-sm px-4 py-2 rounded-full font-semibold">
-            ☀️ Breakfast served weekends 9am - 12pm
-          </div>
-          <p className="text-lake-dark/50 text-sm mt-3 italic">
-            Ask your server about daily drink &amp; food specials
-          </p>
+        <div className="text-center mb-10">
+          <p className="text-lake-blue text-xs tracking-[0.3em] uppercase font-semibold mb-2">Food &amp; Drinks</p>
+          <h2 className="font-serif text-4xl text-lake-dark font-bold mb-2">The Menu</h2>
+          <p className="text-lake-dark/50 text-sm">Ask your server about tonight's specials - the board changes often.</p>
         </div>
 
+        {/* Tab bar */}
+        <div className="flex flex-wrap gap-2 mb-8 justify-center">
+          {TAB_ORDER.map(key => {
+            const m = MENUS[key]
+            const isActive = active === key
+            return (
+              <button key={key} onClick={() => setActive(key)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold
+                  border transition-all
+                  ${isActive
+                    ? 'bg-lake-dark text-lake-cream border-lake-dark shadow-md'
+                    : 'bg-white text-lake-dark/70 border-lake-navy/20 hover:border-lake-navy/50'}`}>
+                <span>{m.icon}</span>
+                <span>{m.label}</span>
+              </button>
+            )
+          })}
+        </div>
+
+        {/* Menu card */}
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-lake-navy/10">
-          {/* Menu header */}
-          <div className="bg-lake-dark px-6 py-4 flex items-center justify-between">
-            <span className="font-serif text-lake-cream text-xl font-bold">Breakfast Menu</span>
-            <span className="text-lake-chalk/60 text-sm">Weekends 9 - 12</span>
+          {/* Card header */}
+          <div className="bg-lake-dark px-6 py-4 flex items-center justify-between flex-wrap gap-2">
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">{menu.icon}</span>
+              <span className="font-serif text-lake-cream text-xl font-bold">{menu.label}</span>
+            </div>
+            <span className={`text-white text-xs font-bold px-3 py-1 rounded-full ${menu.badgeColor}`}>
+              {menu.badge}
+            </span>
           </div>
+
+          {/* Special callout */}
+          {menu.special && (
+            <div className="bg-amber-50 border-b border-amber-200 px-6 py-3">
+              <p className="text-amber-800 text-xs font-semibold">
+                ⭐ {menu.special}
+              </p>
+            </div>
+          )}
 
           <div className="p-6 md:p-8">
-            {/* Two-column layout for desktop */}
             <div className="grid md:grid-cols-2 gap-8">
-              {/* Left column */}
-              <div className="space-y-8">
-                <MenuSection section={BREAKFAST_MENU.sections[0]} />
-                <MenuSection section={BREAKFAST_MENU.sections[3]} />
-              </div>
-              {/* Right column */}
-              <div className="space-y-8">
-                <MenuSection section={BREAKFAST_MENU.sections[1]} />
-                <MenuSection section={BREAKFAST_MENU.sections[2]} />
-                <MenuSection section={BREAKFAST_MENU.sections[4]} />
-              </div>
+              {/* Split sections between two columns */}
+              {[
+                menu.sections.slice(0, Math.ceil(menu.sections.length / 2)),
+                menu.sections.slice(Math.ceil(menu.sections.length / 2)),
+              ].map((col, ci) => (
+                <div key={ci} className="space-y-7">
+                  {col.map(s => <MenuSection key={s.title} section={s} />)}
+                </div>
+              ))}
             </div>
           </div>
+
+          {menu.footer && (
+            <div className="bg-lake-cream/60 border-t border-lake-navy/10 px-6 py-3">
+              <p className="text-lake-dark/45 text-xs italic text-center">{menu.footer}</p>
+            </div>
+          )}
         </div>
 
-        <p className="text-center text-lake-dark/40 text-xs mt-6">
-          Menu and pricing subject to change. More menu items coming soon.
+        <p className="text-center text-lake-dark/35 text-xs mt-5">
+          Menu items and pricing subject to change. More coming soon - full bar menu, burgers, and more.
         </p>
       </div>
     </section>
   )
 }
+
+// ─── LIVE MUSIC ───────────────────────────────────────────────────────────────
 
 function LiveMusic() {
   const today = new Date()
@@ -267,21 +585,21 @@ function LiveMusic() {
       className="py-20">
       <div className="max-w-3xl mx-auto px-4">
         <div className="text-center mb-12">
-          <p className="text-lake-chalk text-sm tracking-[0.3em] uppercase font-semibold mb-2">Events</p>
-          <h2 className="font-serif text-4xl text-lake-cream font-bold mb-3">Live Music Lineup</h2>
-          <p className="text-lake-cream/50 text-sm">Local bands, cold beer, warm nights on the lake</p>
+          <p className="text-lake-chalk text-xs tracking-[0.3em] uppercase font-semibold mb-2 opacity-60">Live Entertainment</p>
+          <h2 className="font-serif text-4xl text-lake-cream font-bold mb-2">Live Music</h2>
+          <p className="text-lake-cream/45 text-sm">Local bands, cold beer, warm Michigan nights</p>
         </div>
 
         {upcoming.length > 0 && (
-          <div className="space-y-3 mb-10">
+          <div className="space-y-2.5 mb-10">
             {upcoming.map((show, i) => {
               const isNext = i === 0
               return (
                 <div key={show.date}
-                  className={`flex items-center gap-4 rounded-xl px-5 py-4 transition-colors
+                  className={`flex items-center gap-4 rounded-xl px-5 py-4 border transition-colors
                     ${isNext
-                      ? 'bg-lake-blue border border-lake-chalk/20'
-                      : 'bg-lake-navy/60 border border-lake-chalk/10 hover:bg-lake-navy/80'}`}>
+                      ? 'bg-lake-blue border-lake-chalk/20'
+                      : 'bg-lake-navy/50 border-lake-chalk/10 hover:bg-lake-navy/80'}`}>
                   {isNext && (
                     <span className="shrink-0 bg-lake-gold text-lake-dark text-xs font-bold px-2 py-0.5 rounded-full">
                       NEXT UP
@@ -289,7 +607,7 @@ function LiveMusic() {
                   )}
                   <div className="flex-1 min-w-0">
                     <p className="text-lake-cream font-bold text-base truncate">{show.artist}</p>
-                    <p className="text-lake-chalk/60 text-sm">{formatDate(show.date)}</p>
+                    <p className="text-lake-chalk/55 text-sm">{fmtDate(show.date)}</p>
                   </div>
                   <span className={`text-sm font-semibold shrink-0
                     ${show.time === 'TBD' ? 'text-lake-gold' : 'text-lake-chalk'}`}>
@@ -304,16 +622,18 @@ function LiveMusic() {
 
         {past.length > 0 && (
           <details className="group">
-            <summary className="text-lake-chalk/40 text-sm text-center cursor-pointer hover:text-lake-chalk/70 transition-colors list-none mb-4">
+            <summary className="text-lake-chalk/35 text-sm text-center cursor-pointer
+              hover:text-lake-chalk/60 transition-colors list-none mb-4">
               ↑ {past.length} past shows this season
             </summary>
             <div className="space-y-2">
               {[...past].reverse().map(show => (
                 <div key={show.date}
-                  className="flex items-center gap-4 rounded-xl px-5 py-3 bg-lake-navy/30 border border-lake-chalk/5 opacity-50">
+                  className="flex items-center gap-4 rounded-xl px-5 py-3
+                    bg-lake-navy/25 border border-lake-chalk/5 opacity-40">
                   <div className="flex-1 min-w-0">
                     <p className="text-lake-cream font-medium text-sm truncate">{show.artist}</p>
-                    <p className="text-lake-chalk/50 text-xs">{formatDate(show.date)}</p>
+                    <p className="text-lake-chalk/50 text-xs">{fmtDate(show.date)}</p>
                   </div>
                   <span className="text-lake-chalk/40 text-xs shrink-0">{show.time}</span>
                 </div>
@@ -323,14 +643,14 @@ function LiveMusic() {
         )}
 
         <div className="mt-8 text-center">
-          <p className="text-lake-chalk/40 text-xs">
+          <p className="text-lake-chalk/35 text-xs">
             Follow us on{' '}
             <a href="https://www.facebook.com/Thecovedevilslake/"
               target="_blank" rel="noopener noreferrer"
-              className="text-lake-chalk/70 hover:text-lake-gold transition-colors underline">
+              className="text-lake-chalk/60 hover:text-lake-gold transition-colors underline">
               Facebook
             </a>
-            {' '}for the latest updates and show announcements.
+            {' '}for the latest show updates and announcements.
           </p>
         </div>
       </div>
@@ -338,39 +658,42 @@ function LiveMusic() {
   )
 }
 
+// ─── FIND US ──────────────────────────────────────────────────────────────────
+
 function FindUs() {
   return (
     <section id="find-us" className="py-20 bg-lake-cream">
       <div className="max-w-4xl mx-auto px-4">
         <div className="text-center mb-12">
-          <p className="text-lake-blue text-sm tracking-[0.3em] uppercase font-semibold mb-2">Location</p>
-          <h2 className="font-serif text-4xl text-lake-dark font-bold mb-3">Find Us</h2>
-          <p className="text-lake-dark/50">Right on the lake, right where you want to be</p>
+          <p className="text-lake-blue text-xs tracking-[0.3em] uppercase font-semibold mb-2">Location</p>
+          <h2 className="font-serif text-4xl text-lake-dark font-bold mb-2">Find Us</h2>
+          <p className="text-lake-dark/45">Right on the water, right where you want to be</p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="space-y-6">
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="space-y-4">
             <div className="bg-white rounded-2xl p-6 border border-lake-navy/10 shadow-sm">
-              <h3 className="font-bold text-lake-dark text-lg mb-4 font-serif">Contact</h3>
+              <h3 className="font-bold text-lake-dark text-lg mb-4 font-serif">Contact &amp; Location</h3>
               <div className="space-y-3 text-sm">
                 <div className="flex items-start gap-3">
-                  <span className="text-lake-blue text-base mt-0.5">📍</span>
+                  <span className="text-lake-blue mt-0.5">📍</span>
                   <div>
-                    <p className="font-semibold text-lake-dark">Devils Lake, Michigan</p>
-                    <p className="text-lake-dark/50">Lenawee County</p>
+                    <p className="font-semibold text-lake-dark">6365 US-223</p>
+                    <p className="text-lake-dark/55">Addison, MI 49220</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-lake-blue text-base">📞</span>
-                  <a href="tel:5174035953" className="text-lake-dark hover:text-lake-blue transition-colors font-semibold">
-                    517-403-5953
+                  <span className="text-lake-blue">📞</span>
+                  <a href="tel:5172525568" className="text-lake-dark hover:text-lake-blue transition-colors font-semibold">
+                    (517) 252-5568
                   </a>
+                  <span className="text-lake-dark/40 text-xs">· Reservations welcome</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-lake-blue text-base mt-0.5">📘</span>
+                  <span className="text-lake-blue mt-0.5">📘</span>
                   <a href="https://www.facebook.com/Thecovedevilslake/"
                     target="_blank" rel="noopener noreferrer"
-                    className="text-lake-dark hover:text-lake-blue transition-colors">
+                    className="text-lake-dark hover:text-lake-blue transition-colors text-sm">
                     facebook.com/Thecovedevilslake
                   </a>
                 </div>
@@ -381,27 +704,30 @@ function FindUs() {
               <h3 className="font-bold text-lake-dark text-lg mb-4 font-serif">Hours</h3>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-lake-dark/60">Weekend Breakfast</span>
-                  <span className="font-semibold text-lake-dark">Sat & Sun, 9am - 12pm</span>
+                  <span className="text-lake-dark/55">Weekend Breakfast</span>
+                  <span className="font-semibold text-lake-dark">Sat &amp; Sun, 9am - 12pm</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-lake-dark/55">Taco Tuesday</span>
+                  <span className="font-semibold text-lake-dark">3pm - 10pm</span>
                 </div>
                 <div className="border-t border-lake-navy/10 pt-2 mt-2">
-                  <p className="text-lake-dark/40 text-xs italic">
-                    Ask your server about daily specials. Bar hours vary by season.
+                  <p className="text-lake-dark/35 text-xs italic">
+                    21+ in bar &amp; patio after 11pm. We check ID. Bar hours vary - call ahead to confirm.
                   </p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Directions + MB link */}
           <div className="space-y-4">
-            <a href="https://maps.google.com/?q=Devils+Lake+Bar+Grill+Manitou+Beach+Michigan"
+            <a href="https://maps.google.com/?q=6365+US-223+Addison+MI+49220"
               target="_blank" rel="noopener noreferrer"
-              className="flex flex-col items-center justify-center rounded-2xl h-48
+              className="flex flex-col items-center justify-center rounded-2xl h-52
                 bg-lake-navy border border-lake-chalk/10 hover:border-lake-chalk/30 transition-colors group">
               <span className="text-5xl mb-3">📍</span>
               <p className="text-lake-cream font-bold group-hover:text-lake-gold transition-colors">Get Directions</p>
-              <p className="text-lake-chalk/40 text-xs mt-1">Opens Google Maps</p>
+              <p className="text-lake-chalk/40 text-xs mt-1">6365 US-223, Addison MI · Opens Google Maps</p>
             </a>
 
             <a href="https://manitoubeachmichigan.com"
@@ -414,8 +740,8 @@ function FindUs() {
                   <p className="text-lake-cream font-bold text-sm group-hover:text-lake-gold transition-colors">
                     Explore Manitou Beach
                   </p>
-                  <p className="text-lake-chalk/50 text-xs mt-0.5">
-                    Events, food trucks, local businesses & more around the lake
+                  <p className="text-lake-chalk/45 text-xs mt-0.5">
+                    Events, food trucks, businesses &amp; more around Devils Lake
                   </p>
                 </div>
                 <span className="text-lake-chalk/30 group-hover:text-lake-gold transition-colors">→</span>
@@ -428,12 +754,20 @@ function FindUs() {
   )
 }
 
+// ─── FOOTER ───────────────────────────────────────────────────────────────────
+
 function Footer() {
   return (
-    <footer className="bg-lake-dark py-8 border-t border-lake-navy">
+    <footer className="bg-lake-dark py-10 border-t border-lake-navy">
       <div className="max-w-4xl mx-auto px-4 text-center">
+        <div className="flex justify-center mb-4">
+          <BrandLogo size={64} />
+        </div>
         <p className="font-serif text-lake-gold font-bold text-lg mb-1">Devils Lake Bar &amp; Grill</p>
-        <p className="text-lake-chalk/40 text-xs mb-4">Devils Lake, Michigan</p>
+        <p className="text-lake-chalk/35 text-xs mb-1">6365 US-223, Addison, MI 49220</p>
+        <p className="text-lake-chalk/35 text-xs mb-5">
+          <a href="tel:5172525568" className="hover:text-lake-chalk transition-colors">(517) 252-5568</a>
+        </p>
         <div className="flex justify-center gap-6 text-xs text-lake-chalk/30">
           <a href="https://www.facebook.com/Thecovedevilslake/"
             target="_blank" rel="noopener noreferrer"
@@ -442,27 +776,26 @@ function Footer() {
             target="_blank" rel="noopener noreferrer"
             className="hover:text-lake-chalk transition-colors">Manitou Beach Community</a>
         </div>
-        <p className="text-lake-chalk/20 text-xs mt-4">
-          &copy; {new Date().getFullYear()} Devils Lake Bar &amp; Grill
+        <p className="text-lake-chalk/20 text-xs mt-5">
+          &copy; {new Date().getFullYear()} Devils Lake Bar &amp; Grill &middot; Living your best life
         </p>
       </div>
     </footer>
   )
 }
 
-// ─── APP ─────────────────────────────────────────────────────────────────────
+// ─── APP ──────────────────────────────────────────────────────────────────────
 
 export default function App() {
   return (
     <div style={{ minHeight: '100vh' }}>
       <Nav />
-      <div style={{ paddingTop: 0 }}>
-        <Hero />
-        <Menu />
-        <LiveMusic />
-        <FindUs />
-        <Footer />
-      </div>
+      <Hero />
+      <WeeklySpecials />
+      <Menu />
+      <LiveMusic />
+      <FindUs />
+      <Footer />
     </div>
   )
 }
