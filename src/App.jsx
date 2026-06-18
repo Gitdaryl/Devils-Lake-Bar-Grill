@@ -664,14 +664,13 @@ function LiveMusic() {
 
 // ─── REVIEWS ──────────────────────────────────────────────────────────────────
 
-// Real reviews sourced from Yahoo Local + Google. Add more from Google reviews link.
 const REVIEWS = [
-  { name: 'Gary K.',    stars: 5, text: 'Very clean facility with ample parking. The atmosphere is great for conversation. The food is wholesome and very tasty - especially their tacos and smoked chicken wings.' },
-  { name: 'Blaise B.', stars: 5, text: 'New ownership as of last summer. I love their smoked cream cheese dip! They do all the smoking in house.' },
-  { name: 'Cierra W.', stars: 5, text: 'Ordered carry out with onion rings, homemade fries, and smoked wings. The wings had a very good smoked flavor. Really impressed.' },
-  { name: 'Gary K.',    stars: 5, text: 'We find the food to be wholesome and very tasty. A great local spot - we keep coming back.' },
-  { name: 'Cierra W.', stars: 5, text: 'Homemade fries and onion rings are excellent. Clean menus, friendly staff. Solid neighborhood bar and grill.' },
-  { name: 'Blaise B.', stars: 5, text: 'Great food, great vibes. The smoked items are next level - you can tell everything is made with care in house.' },
+  { name: 'H W.',           stars: 5, text: 'Local family bought it, which is amazing. The food is top notch. Not a lot but what they offer is yum! The blue cheese burger is #1 and so is the smoked cream cheese. Plus, the people are so nice and fun! What a great low key night out.' },
+  { name: 'Laura S.',       stars: 5, text: 'Gina was our bartender, she was great! The bar was busy and she was upbeat, fun and attentive making sure everyone felt attended to. We will be back to see her!' },
+  { name: 'Ivory W.',       stars: 5, text: "Devil's Lake Bar & Grill is an absolute gem! The place is spotless, with a welcoming and family-friendly atmosphere. The menu offers a great variety of delicious food, with generous portions and fresh ingredients. Highly recommend the Smoked Cream Cheese with Jalapeno Jam." },
+  { name: 'Aubrey H.',      stars: 5, text: 'Delicious food! The waitress, Gina, was one of the best I\'ve ever had. Very attentive and quick to address requests.' },
+  { name: 'Brenda R.',      stars: 5, text: 'We had a blast here. Sam and Jess are the best. The food was amazing. It was a great night for me, my husband, and our adult son to get out for a night of fun. We will be back!' },
+  { name: 'Michelle T.',    stars: 5, text: 'We went today for Breakfast with some friends and had a really nice time. The food was really good! I got Crepes with Bananas and Strawberries. My kids got Pancakes. Will definitely be back!' },
 ]
 
 function Stars({ count }) {
