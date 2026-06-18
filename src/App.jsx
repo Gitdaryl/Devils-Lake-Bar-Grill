@@ -662,6 +662,78 @@ function LiveMusic() {
   )
 }
 
+// ─── REVIEWS ──────────────────────────────────────────────────────────────────
+
+// Real reviews sourced from Yahoo Local + Google. Add more from Google reviews link.
+const REVIEWS = [
+  { name: 'Gary K.',    stars: 5, text: 'Very clean facility with ample parking. The atmosphere is great for conversation. The food is wholesome and very tasty - especially their tacos and smoked chicken wings.' },
+  { name: 'Blaise B.', stars: 5, text: 'New ownership as of last summer. I love their smoked cream cheese dip! They do all the smoking in house.' },
+  { name: 'Cierra W.', stars: 5, text: 'Ordered carry out with onion rings, homemade fries, and smoked wings. The wings had a very good smoked flavor. Really impressed.' },
+  { name: 'Gary K.',    stars: 5, text: 'We find the food to be wholesome and very tasty. A great local spot - we keep coming back.' },
+  { name: 'Cierra W.', stars: 5, text: 'Homemade fries and onion rings are excellent. Clean menus, friendly staff. Solid neighborhood bar and grill.' },
+  { name: 'Blaise B.', stars: 5, text: 'Great food, great vibes. The smoked items are next level - you can tell everything is made with care in house.' },
+]
+
+function Stars({ count }) {
+  return (
+    <span className="text-lake-gold text-sm tracking-tight" aria-label={`${count} stars`}>
+      {'★'.repeat(count)}{'☆'.repeat(5 - count)}
+    </span>
+  )
+}
+
+function ReviewTicker() {
+  // Duplicate for seamless infinite loop
+  const doubled = [...REVIEWS, ...REVIEWS]
+
+  return (
+    <section className="py-14 bg-lake-dark border-t border-lake-navy overflow-hidden">
+      <AnimateIn className="text-center mb-8 px-4">
+        <div className="flex items-center justify-center gap-3 mb-1">
+          <span className="text-lake-gold text-xl tracking-tight">★★★★★</span>
+          <span className="text-lake-cream font-bold text-lg font-serif">108 Google Reviews</span>
+        </div>
+        <p className="text-lake-chalk/45 text-xs">
+          What people are saying about Devils Lake Bar &amp; Grill
+        </p>
+      </AnimateIn>
+
+      {/* Ticker - overflow hidden on parent, no body scroll trap */}
+      <div style={{ overflow: 'hidden' }}>
+        <div
+          className="marquee-track"
+          style={{ display: 'flex', gap: '16px', width: 'max-content' }}
+        >
+          {doubled.map((r, i) => (
+            <div
+              key={i}
+              style={{ width: '280px', flexShrink: 0 }}
+              className="bg-lake-navy/60 border border-lake-chalk/10 rounded-xl p-5"
+            >
+              <Stars count={r.stars} />
+              <p className="text-lake-cream/85 text-sm leading-relaxed mt-2 mb-3">
+                &ldquo;{r.text}&rdquo;
+              </p>
+              <p className="text-lake-chalk/50 text-xs font-semibold">— {r.name}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="text-center mt-6">
+        <a
+          href="https://maps.google.com/?q=Devils+Lake+Bar+Grill+6365+US-223+Addison+MI"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-lake-chalk/40 text-xs hover:text-lake-gold transition-colors underline"
+        >
+          Read all 108 reviews on Google →
+        </a>
+      </div>
+    </section>
+  )
+}
+
 // ─── FIND US ──────────────────────────────────────────────────────────────────
 
 function FindUs() {
@@ -707,17 +779,20 @@ function FindUs() {
             <div className="bg-white rounded-2xl p-6 border border-lake-navy/10 shadow-sm">
               <h3 className="font-bold text-lake-dark text-lg mb-4 font-serif">Hours</h3>
               <div className="space-y-2 text-sm">
-                <div className="flex flex-col sm:flex-row justify-between gap-0.5 sm:gap-0">
-                  <span className="text-lake-dark/55">Weekend Breakfast</span>
-                  <span className="font-semibold text-lake-dark">Sat &amp; Sun, 9am - 12pm</span>
-                </div>
-                <div className="flex flex-col sm:flex-row justify-between gap-0.5 sm:gap-0">
-                  <span className="text-lake-dark/55">Taco Tuesday</span>
-                  <span className="font-semibold text-lake-dark">3pm - 10pm</span>
-                </div>
-                <div className="border-t border-lake-navy/10 pt-2 mt-2">
+                {[
+                  ['Mon - Thu', '3pm - 10pm'],
+                  ['Friday',    '11am - 2am'],
+                  ['Saturday',  '9am - 2am'],
+                  ['Sunday',    '9am - 8pm'],
+                ].map(([day, hrs]) => (
+                  <div key={day} className="flex flex-col sm:flex-row justify-between gap-0.5 sm:gap-0">
+                    <span className="text-lake-dark/55">{day}</span>
+                    <span className="font-semibold text-lake-dark">{hrs}</span>
+                  </div>
+                ))}
+                <div className="border-t border-lake-navy/10 pt-2 mt-1">
                   <p className="text-lake-dark/35 text-xs italic">
-                    21+ in bar &amp; patio after 11pm. We check ID. Bar hours vary - call ahead to confirm.
+                    Breakfast served Sat &amp; Sun 9am - 12pm. 21+ in bar &amp; patio after 11pm.
                   </p>
                 </div>
               </div>
@@ -806,6 +881,7 @@ export default function App() {
       <WeeklySpecials />
       <Menu />
       <LiveMusic />
+      <ReviewTicker />
       <FindUs />
       <Footer />
     </div>
