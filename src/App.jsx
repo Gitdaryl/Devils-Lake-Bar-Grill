@@ -892,7 +892,7 @@ function Footer() {
             className="hover:text-lake-chalk transition-colors">Manitou Beach Community</a>
         </div>
         <p className="text-lake-chalk/20 text-xs mt-5">
-          &copy; {new Date().getFullYear()} Devils Lake Bar &amp; Grill &middot; Living your best life
+          &copy; {new Date().getFullYear()} Devils Lake Bar &amp; Grill &middot; Living Your Best Life
         </p>
       </div>
     </footer>
