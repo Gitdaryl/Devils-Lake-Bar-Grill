@@ -316,10 +316,10 @@ function Nav() {
             Devils Lake Bar &amp; Grill
           </span>
         </div>
-        <div className="flex gap-5 text-sm">
-          {[['#specials','Specials'],['#menu','Menu'],['#music','Live Music'],['#find-us','Find Us']].map(([href, label]) => (
+        <div className="flex gap-2 sm:gap-4 text-xs sm:text-sm">
+          {[['#specials','Specials'],['#menu','Menu'],['#music','Music'],['#find-us','Find Us']].map(([href, label]) => (
             <a key={href} href={href}
-              className="text-lake-cream/70 hover:text-lake-gold transition-colors font-medium">
+              className="text-lake-cream/70 hover:text-lake-gold transition-colors font-medium whitespace-nowrap">
               {label}
             </a>
           ))}
@@ -415,7 +415,7 @@ function WeeklySpecials() {
           {WEEKLY_SPECIALS.map(({ day, label, icon, desc }, i) => {
             const isToday = dayMap[day] === today
             return (
-              <AnimateIn key={day} delay={i * 70} from="bottom">
+              <AnimateIn key={day} delay={i * 70} from="bottom" className="h-full">
                 <div
                   className={`rounded-xl p-4 text-center border transition-colors h-full
                     ${isToday
@@ -500,13 +500,13 @@ function Menu() {
         </AnimateIn>
 
         {/* Tab bar */}
-        <AnimateIn delay={100} className="flex flex-wrap gap-2 mb-8 justify-center">
+        <AnimateIn delay={100} className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 mb-8 sm:justify-center">
           {TAB_ORDER.map(key => {
             const m = MENUS[key]
             const isActive = active === key
             return (
               <button key={key} onClick={() => setActive(key)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold
+                className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold
                   border transition-all
                   ${isActive
                     ? 'bg-lake-dark text-lake-cream border-lake-dark shadow-md'
@@ -522,7 +522,7 @@ function Menu() {
         <AnimateIn delay={180}>
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-lake-navy/10">
           {/* Card header */}
-          <div className="bg-lake-dark px-6 py-4 flex items-center justify-between flex-wrap gap-2">
+          <div className="bg-lake-dark px-4 sm:px-6 py-4 flex items-center justify-between flex-wrap gap-2">
             <div className="flex items-center gap-3">
               <span className="text-2xl">{menu.icon}</span>
               <span className="font-serif text-lake-cream text-xl font-bold">{menu.label}</span>
@@ -534,7 +534,7 @@ function Menu() {
 
           {/* Special callout */}
           {menu.special && (
-            <div className="bg-amber-50 border-b border-amber-200 px-6 py-3">
+            <div className="bg-amber-50 border-b border-amber-200 px-4 sm:px-6 py-3">
               <p className="text-amber-800 text-xs font-semibold">
                 ⭐ {menu.special}
               </p>
@@ -599,7 +599,7 @@ function LiveMusic() {
               return (
                 <AnimateIn key={show.date} delay={i * 60} from="left">
                 <div
-                  className={`flex items-center gap-4 rounded-xl px-5 py-4 border transition-colors
+                  className={`flex items-center gap-2 sm:gap-4 rounded-xl px-3 sm:px-5 py-4 border transition-colors
                     ${isNext
                       ? 'bg-lake-blue border-lake-chalk/20'
                       : 'bg-lake-navy/50 border-lake-chalk/10 hover:bg-lake-navy/80'}`}>
@@ -633,7 +633,7 @@ function LiveMusic() {
             <div className="space-y-2">
               {[...past].reverse().map(show => (
                 <div key={show.date}
-                  className="flex items-center gap-4 rounded-xl px-5 py-3
+                  className="flex items-center gap-3 rounded-xl px-3 sm:px-5 py-3
                     bg-lake-navy/25 border border-lake-chalk/5 opacity-40">
                   <div className="flex-1 min-w-0">
                     <p className="text-lake-cream font-medium text-sm truncate">{show.artist}</p>
@@ -707,11 +707,11 @@ function FindUs() {
             <div className="bg-white rounded-2xl p-6 border border-lake-navy/10 shadow-sm">
               <h3 className="font-bold text-lake-dark text-lg mb-4 font-serif">Hours</h3>
               <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
+                <div className="flex flex-col sm:flex-row justify-between gap-0.5 sm:gap-0">
                   <span className="text-lake-dark/55">Weekend Breakfast</span>
                   <span className="font-semibold text-lake-dark">Sat &amp; Sun, 9am - 12pm</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex flex-col sm:flex-row justify-between gap-0.5 sm:gap-0">
                   <span className="text-lake-dark/55">Taco Tuesday</span>
                   <span className="font-semibold text-lake-dark">3pm - 10pm</span>
                 </div>
