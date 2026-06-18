@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import './index.css'
+import AdminApp from './Admin.jsx'
 
 // ─── ANIMATION ───────────────────────────────────────────────────────────────
 
@@ -901,6 +902,8 @@ function Footer() {
 // ─── APP ──────────────────────────────────────────────────────────────────────
 
 export default function App() {
+  if (window.location.pathname.startsWith('/admin')) return <AdminApp />
+
   const { liveMusic, menuItems } = useNotionData()
   return (
     <div style={{ minHeight: '100vh' }}>
