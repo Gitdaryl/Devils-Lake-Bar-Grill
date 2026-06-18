@@ -253,76 +253,16 @@ function fmtDate(str) {
 
 // ─── LOGO ────────────────────────────────────────────────────────────────────
 
-function BrandLogo({ size = 80 }) {
-  const r = size / 2
+function BrandLogo({ size = 80, className = '' }) {
   return (
-    <svg viewBox="0 0 200 200" width={size} height={size} aria-label="Devils Lake Bar and Grill">
-      <defs>
-        <linearGradient id="sunGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#d42020" />
-          <stop offset="50%" stopColor="#e87822" />
-          <stop offset="100%" stopColor="#f5b833" />
-        </linearGradient>
-        <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#faf4ea" />
-          <stop offset="100%" stopColor="#e8e0d0" />
-        </linearGradient>
-        <clipPath id="circle"><circle cx="100" cy="100" r="93" /></clipPath>
-      </defs>
-
-      {/* Outer ring */}
-      <circle cx="100" cy="100" r="98" fill="#1a2035" />
-      <circle cx="100" cy="100" r="93" fill="url(#skyGrad)" />
-
-      {/* Sun rays */}
-      {[0,22,44,66,-22,-44,-66,-88,88].map((angle, i) => (
-        <line key={i}
-          x1="100" y1="100"
-          x2={100 + 80 * Math.sin((angle * Math.PI) / 180)}
-          y2={100 - 80 * Math.cos((angle * Math.PI) / 180)}
-          stroke="#e87822" strokeWidth="2.5" strokeDasharray="4 4" opacity="0.7"
-          clipPath="url(#circle)"
-        />
-      ))}
-
-      {/* Lake horizon arc */}
-      <path d="M 15 108 Q 100 68 185 108" fill="none" stroke="#2a7a8c" strokeWidth="7" strokeLinecap="round" />
-
-      {/* Wave divider */}
-      <path d="M 15 122 Q 40 112 65 122 T 115 122 T 165 122 T 185 122"
-        fill="none" stroke="#1a2035" strokeWidth="3" opacity="0.5" />
-
-      {/* Water bottom fill */}
-      <path d="M 15 122 Q 40 112 65 122 T 115 122 T 165 122 T 185 122 L 185 190 L 15 190 Z"
-        fill="#d4eef5" opacity="0.6" clipPath="url(#circle)" />
-
-      {/* Water lines */}
-      {[132, 143, 154, 165].map((y, i) => (
-        <line key={i} x1={25 + i * 5} y1={y} x2={175 - i * 5} y2={y}
-          stroke="#2a7a8c" strokeWidth="1.5" opacity={0.4 - i * 0.08} clipPath="url(#circle)" />
-      ))}
-
-      {/* DEVILS LAKE text */}
-      <text x="100" y="120" textAnchor="middle"
-        fontFamily="Georgia, serif" fontSize="26" fontWeight="900"
-        letterSpacing="1" fill="url(#sunGrad)">
-        DEVILS LAKE
-      </text>
-
-      {/* Bar and Grill text */}
-      <text x="100" y="148" textAnchor="middle"
-        fontFamily="Georgia, serif" fontSize="13" fontWeight="700" fill="#1a2035">
-        Bar and Grill
-      </text>
-
-      {/* Tagline arc */}
-      <path id="tagArc" d="M 30 85 A 75 75 0 0 1 170 85" fill="none" />
-      <text fontSize="9" fontFamily="Georgia, serif" fontStyle="italic" fill="#444" opacity="0.8">
-        <textPath href="#tagArc" startOffset="50%" textAnchor="middle">
-          Living your best life
-        </textPath>
-      </text>
-    </svg>
+    <img
+      src="/dl_bargrill_logo.png"
+      alt="Devils Lake Bar and Grill"
+      width={size}
+      height={size}
+      className={className}
+      style={{ objectFit: 'contain' }}
+    />
   )
 }
 
@@ -356,44 +296,64 @@ function Nav() {
 
 function Hero() {
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center text-center px-4 pt-14"
-      style={{ background: 'linear-gradient(160deg, #0d1b2a 0%, #1a2d45 55%, #0a1e32 100%)' }}>
+    <section style={{ position: 'relative', minHeight: '100svh', overflow: 'hidden' }}>
+      {/* Looping video background */}
+      <video
+        autoPlay muted loop playsInline
+        style={{
+          position: 'absolute', inset: 0,
+          width: '100%', height: '100%',
+          objectFit: 'cover', zIndex: 0,
+        }}
+        src="/devils-lake-bar-and-grill-hero.mp4"
+      />
 
-      <div className="mb-8">
-        <BrandLogo size={160} />
+      {/* Dark gradient overlay so text pops */}
+      <div style={{
+        position: 'absolute', inset: 0, zIndex: 1,
+        background: 'linear-gradient(to bottom, rgba(10,20,35,0.55) 0%, rgba(10,20,35,0.75) 60%, rgba(10,20,35,0.92) 100%)',
+      }} />
+
+      {/* Content */}
+      <div style={{ position: 'relative', zIndex: 2 }}
+        className="flex flex-col items-center justify-center text-center px-4 pt-20 pb-16 min-h-screen">
+
+        <div className="mb-6 drop-shadow-2xl">
+          <BrandLogo size={180} />
+        </div>
+
+        <p className="text-lake-chalk text-xs tracking-[0.4em] uppercase mb-3 opacity-70">
+          Addison, Michigan · Devils Lake
+        </p>
+        <h1 className="text-lake-cream font-serif text-4xl md:text-6xl font-bold leading-tight mb-3 drop-shadow-lg">
+          Living your <span className="text-lake-gold">best life</span>
+        </h1>
+        <p className="text-lake-cream/70 text-base md:text-lg max-w-sm mb-10">
+          Great food, cold drinks, live music, and the best view in Lenawee County.
+        </p>
+
+        <div className="flex flex-wrap gap-3 justify-center mb-12">
+          <a href="#menu"
+            className="px-6 py-3 bg-lake-blue text-white rounded-lg font-semibold
+              hover:bg-blue-600 transition-colors shadow-lg">
+            See the Menu
+          </a>
+          <a href="#music"
+            className="px-6 py-3 border border-white/30 text-white rounded-lg font-semibold
+              hover:bg-white/10 transition-colors backdrop-blur-sm">
+            Live Music Lineup
+          </a>
+        </div>
+
+        <div className="flex flex-wrap gap-5 justify-center text-xs text-lake-cream/55">
+          <span>📍 6365 US-223, Addison, MI</span>
+          <span>📞 <a href="tel:5172525568" className="hover:text-lake-gold transition-colors">(517) 252-5568</a></span>
+          <span>☀️ Weekend Breakfast 9am - 12pm</span>
+          <span>21+ in bar &amp; patio after 11pm</span>
+        </div>
+
+        <div className="mt-14 text-white/30 text-xl animate-bounce">↓</div>
       </div>
-
-      <p className="text-lake-chalk text-xs tracking-[0.4em] uppercase mb-3 opacity-70">
-        Addison, Michigan · Devils Lake
-      </p>
-      <h1 className="text-lake-cream font-serif text-4xl md:text-6xl font-bold leading-tight mb-3">
-        Living your <span className="text-lake-gold">best life</span>
-      </h1>
-      <p className="text-lake-cream/60 text-base md:text-lg max-w-sm mb-10">
-        Great food, cold drinks, live music, and the best view in Lenawee County.
-      </p>
-
-      <div className="flex flex-wrap gap-3 justify-center mb-12">
-        <a href="#menu"
-          className="px-6 py-3 bg-lake-blue text-white rounded-lg font-semibold
-            hover:bg-blue-600 transition-colors">
-          See the Menu
-        </a>
-        <a href="#music"
-          className="px-6 py-3 border border-lake-chalk/30 text-lake-chalk rounded-lg font-semibold
-            hover:bg-lake-navy transition-colors">
-          Live Music Lineup
-        </a>
-      </div>
-
-      <div className="flex flex-wrap gap-5 justify-center text-xs text-lake-cream/50">
-        <span>📍 6365 US-223, Addison, MI</span>
-        <span>📞 <a href="tel:5172525568" className="hover:text-lake-gold transition-colors">(517) 252-5568</a></span>
-        <span>☀️ Weekend Breakfast 9am - 12pm</span>
-        <span>21+ in bar &amp; patio after 11pm</span>
-      </div>
-
-      <div className="mt-14 text-lake-chalk/30 text-xl animate-bounce">↓</div>
     </section>
   )
 }
@@ -721,13 +681,21 @@ function FindUs() {
           </div>
 
           <div className="space-y-4">
+            {/* Drone photo with directions overlay */}
             <a href="https://maps.google.com/?q=6365+US-223+Addison+MI+49220"
               target="_blank" rel="noopener noreferrer"
-              className="flex flex-col items-center justify-center rounded-2xl h-52
-                bg-lake-navy border border-lake-chalk/10 hover:border-lake-chalk/30 transition-colors group">
-              <span className="text-5xl mb-3">📍</span>
-              <p className="text-lake-cream font-bold group-hover:text-lake-gold transition-colors">Get Directions</p>
-              <p className="text-lake-chalk/40 text-xs mt-1">6365 US-223, Addison MI · Opens Google Maps</p>
+              className="relative block rounded-2xl overflow-hidden group h-52">
+              <img
+                src="/Devils-lake-bar-grill.jpg"
+                alt="Devils Lake Bar and Grill aerial view"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-lake-dark/50 group-hover:bg-lake-dark/40 transition-colors
+                flex flex-col items-center justify-center">
+                <span className="text-4xl mb-2 drop-shadow">📍</span>
+                <p className="text-white font-bold text-base drop-shadow">Get Directions</p>
+                <p className="text-white/60 text-xs mt-1">6365 US-223, Addison MI</p>
+              </div>
             </a>
 
             <a href="https://manitoubeachmichigan.com"
