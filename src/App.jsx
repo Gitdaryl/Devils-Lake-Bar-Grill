@@ -1,5 +1,42 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import './index.css'
+
+// ─── ANIMATION ───────────────────────────────────────────────────────────────
+
+function useInView(threshold = 0.15) {
+  const ref = useRef(null)
+  const [inView, setInView] = useState(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const obs = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { setInView(true); obs.disconnect() }
+    }, { threshold })
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [threshold])
+  return [ref, inView]
+}
+
+function AnimateIn({ children, delay = 0, from = 'bottom', className = '', style = {} }) {
+  const [ref, inView] = useInView()
+  const origins = {
+    bottom: 'translateY(32px)',
+    left:   'translateX(-32px)',
+    right:  'translateX(32px)',
+    up:     'translateY(-20px)',
+  }
+  return (
+    <div ref={ref} className={className} style={{
+      opacity:    inView ? 1 : 0,
+      transform:  inView ? 'none' : origins[from],
+      transition: `opacity 0.6s ease ${delay}ms, transform 0.6s ease ${delay}ms`,
+      ...style,
+    }}>
+      {children}
+    </div>
+  )
+}
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -369,28 +406,30 @@ function WeeklySpecials() {
       style={{ background: '#111820' }}
       className="py-16">
       <div className="max-w-5xl mx-auto px-4">
-        <div className="text-center mb-10">
+        <AnimateIn className="text-center mb-10">
           <p className="text-lake-chalk text-xs tracking-[0.3em] uppercase font-semibold mb-2 opacity-60">Every Week</p>
           <h2 className="font-serif text-3xl text-lake-cream font-bold">Weekly Specials</h2>
-        </div>
+        </AnimateIn>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-          {WEEKLY_SPECIALS.map(({ day, label, icon, desc }) => {
+          {WEEKLY_SPECIALS.map(({ day, label, icon, desc }, i) => {
             const isToday = dayMap[day] === today
             return (
-              <div key={day}
-                className={`rounded-xl p-4 text-center border transition-colors
-                  ${isToday
-                    ? 'bg-lake-blue border-lake-chalk/30 ring-1 ring-lake-gold'
-                    : 'bg-lake-navy/40 border-lake-chalk/10 hover:bg-lake-navy/70'}`}>
-                <div className="text-2xl mb-2">{icon}</div>
-                <p className={`text-xs font-bold tracking-widest uppercase mb-1
-                  ${isToday ? 'text-lake-gold' : 'text-lake-chalk/50'}`}>
-                  {day}{isToday && ' · Today'}
-                </p>
-                <p className="text-lake-cream font-bold text-sm mb-1">{label}</p>
-                <p className="text-lake-chalk/50 text-xs leading-snug">{desc}</p>
-              </div>
+              <AnimateIn key={day} delay={i * 70} from="bottom">
+                <div
+                  className={`rounded-xl p-4 text-center border transition-colors h-full
+                    ${isToday
+                      ? 'bg-lake-blue border-lake-chalk/30 ring-1 ring-lake-gold'
+                      : 'bg-lake-navy/40 border-lake-chalk/10 hover:bg-lake-navy/70'}`}>
+                  <div className="text-2xl mb-2">{icon}</div>
+                  <p className={`text-xs font-bold tracking-widest uppercase mb-1
+                    ${isToday ? 'text-lake-gold' : 'text-lake-chalk/50'}`}>
+                    {day}{isToday && ' · Today'}
+                  </p>
+                  <p className="text-lake-cream font-bold text-sm mb-1">{label}</p>
+                  <p className="text-lake-chalk/50 text-xs leading-snug">{desc}</p>
+                </div>
+              </AnimateIn>
             )
           })}
         </div>
@@ -454,14 +493,14 @@ function Menu() {
   return (
     <section id="menu" className="py-20 bg-lake-cream">
       <div className="max-w-4xl mx-auto px-4">
-        <div className="text-center mb-10">
+        <AnimateIn className="text-center mb-10">
           <p className="text-lake-blue text-xs tracking-[0.3em] uppercase font-semibold mb-2">Food &amp; Drinks</p>
           <h2 className="font-serif text-4xl text-lake-dark font-bold mb-2">The Menu</h2>
           <p className="text-lake-dark/50 text-sm">Ask your server about tonight's specials - the board changes often.</p>
-        </div>
+        </AnimateIn>
 
         {/* Tab bar */}
-        <div className="flex flex-wrap gap-2 mb-8 justify-center">
+        <AnimateIn delay={100} className="flex flex-wrap gap-2 mb-8 justify-center">
           {TAB_ORDER.map(key => {
             const m = MENUS[key]
             const isActive = active === key
@@ -477,9 +516,10 @@ function Menu() {
               </button>
             )
           })}
-        </div>
+        </AnimateIn>
 
         {/* Menu card */}
+        <AnimateIn delay={180}>
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-lake-navy/10">
           {/* Card header */}
           <div className="bg-lake-dark px-6 py-4 flex items-center justify-between flex-wrap gap-2">
@@ -522,6 +562,8 @@ function Menu() {
           )}
         </div>
 
+        </AnimateIn>
+
         <p className="text-center text-lake-dark/35 text-xs mt-5">
           Menu items and pricing subject to change. More coming soon - full bar menu, burgers, and more.
         </p>
@@ -544,18 +586,19 @@ function LiveMusic() {
       style={{ background: 'linear-gradient(180deg, #1a2d45 0%, #0d1b2a 100%)' }}
       className="py-20">
       <div className="max-w-3xl mx-auto px-4">
-        <div className="text-center mb-12">
+        <AnimateIn className="text-center mb-12">
           <p className="text-lake-chalk text-xs tracking-[0.3em] uppercase font-semibold mb-2 opacity-60">Live Entertainment</p>
           <h2 className="font-serif text-4xl text-lake-cream font-bold mb-2">Live Music</h2>
           <p className="text-lake-cream/45 text-sm">Local bands, cold beer, warm Michigan nights</p>
-        </div>
+        </AnimateIn>
 
         {upcoming.length > 0 && (
           <div className="space-y-2.5 mb-10">
             {upcoming.map((show, i) => {
               const isNext = i === 0
               return (
-                <div key={show.date}
+                <AnimateIn key={show.date} delay={i * 60} from="left">
+                <div
                   className={`flex items-center gap-4 rounded-xl px-5 py-4 border transition-colors
                     ${isNext
                       ? 'bg-lake-blue border-lake-chalk/20'
@@ -575,6 +618,7 @@ function LiveMusic() {
                   </span>
                   <span className="text-xl shrink-0">🎸</span>
                 </div>
+                </AnimateIn>
               )
             })}
           </div>
@@ -624,14 +668,14 @@ function FindUs() {
   return (
     <section id="find-us" className="py-20 bg-lake-cream">
       <div className="max-w-4xl mx-auto px-4">
-        <div className="text-center mb-12">
+        <AnimateIn className="text-center mb-12">
           <p className="text-lake-blue text-xs tracking-[0.3em] uppercase font-semibold mb-2">Location</p>
           <h2 className="font-serif text-4xl text-lake-dark font-bold mb-2">Find Us</h2>
           <p className="text-lake-dark/45">Right on the water, right where you want to be</p>
-        </div>
+        </AnimateIn>
 
         <div className="grid md:grid-cols-2 gap-6">
-          <div className="space-y-4">
+          <AnimateIn from="left" className="space-y-4">
             <div className="bg-white rounded-2xl p-6 border border-lake-navy/10 shadow-sm">
               <h3 className="font-bold text-lake-dark text-lg mb-4 font-serif">Contact &amp; Location</h3>
               <div className="space-y-3 text-sm">
@@ -678,9 +722,9 @@ function FindUs() {
                 </div>
               </div>
             </div>
-          </div>
+          </AnimateIn>
 
-          <div className="space-y-4">
+          <AnimateIn from="right" delay={100} className="space-y-4">
             {/* Drone photo with directions overlay */}
             <a href="https://maps.google.com/?q=6365+US-223+Addison+MI+49220"
               target="_blank" rel="noopener noreferrer"
@@ -715,7 +759,7 @@ function FindUs() {
                 <span className="text-lake-chalk/30 group-hover:text-lake-gold transition-colors">→</span>
               </div>
             </a>
-          </div>
+          </AnimateIn>
         </div>
       </div>
     </section>
