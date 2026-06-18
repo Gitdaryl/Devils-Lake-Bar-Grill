@@ -494,7 +494,7 @@ function Dashboard({ session, onLogout }) {
         <div className="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img src="/dl_bargrill_logo.png" alt="" className="w-7 h-7 rounded-full" />
-            <span className="text-lake-gold font-serif font-bold text-sm hidden sm:block">The Cove Admin</span>
+            <span className="text-lake-gold font-serif font-bold text-sm hidden sm:block">DL Bar &amp; Grill Admin</span>
           </div>
           <div className="flex items-center gap-3">
             {msg && <span className={`text-xs font-semibold ${msg.includes('fail') ? 'text-red-400' : 'text-green-400'}`}>{msg}</span>}
